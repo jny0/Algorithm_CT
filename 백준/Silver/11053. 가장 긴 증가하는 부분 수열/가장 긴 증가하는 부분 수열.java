@@ -2,7 +2,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -18,6 +17,7 @@ public class Main {
 
         int[] dp = new int[n];
         dp[0] = 1;
+        int answer = 1;
 
         for (int i = 1; i <n; i++) {
             dp[i] = 1;
@@ -26,11 +26,10 @@ public class Main {
                     dp[i] = dp[j] + 1;
                 }
             }
+            answer = Math.max(answer, dp[i]);
         }
 
-        Arrays.sort(dp);
-
-        System.out.println(dp[n-1]);
-
+        //Arrays.sort(dp); // dp 배열에 저장된 값 중 중에 제일 큰 값을 찾기 위한 정렬
+        System.out.println(answer);
     }
 }
