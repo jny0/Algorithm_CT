@@ -31,22 +31,15 @@ public class Main {
             if (current == end) {
                 return String.valueOf(arr[current] - 1);
             }
-            if (current + up <= floor) {
-                if(arr[current+up] ==0){
-                    arr[current+up] = arr[current]+1;
-                    q.add(current + up);
-                }
+            if (current + up <= floor && arr[current + up] == 0) {
+                arr[current + up] = arr[current] + 1;
+                q.add(current + up);
             }
-            if(current - down >0) {
-                if(arr[current-down] ==0){
-                    arr[current-down] = arr[current]+1;
-                    q.add(current - down);
-                }
+            if (current - down > 0 && arr[current - down] == 0) {
+                arr[current - down] = arr[current] + 1;
+                q.add(current - down);
             }
-
         }
-
         return "use the stairs";
     }
-
 }
