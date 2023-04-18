@@ -6,8 +6,7 @@ import java.util.*;
 
 public class Main {
 
-    static List<List<Node>> graph = new ArrayList<>();
-    static List<List<Node>> graph2 = new ArrayList<>();
+    static List<List<Node>> graph, reverseGraph = new ArrayList<>();
     static int N;
 
     public static void main(String[] args) throws IOException {
@@ -18,9 +17,12 @@ public class Main {
         int M = Integer.parseInt(st.nextToken()); // 도로의 개수
         int X = Integer.parseInt(st.nextToken());
 
+        graph = new ArrayList<>();
+        reverseGraph = new ArrayList<>();
+
         for (int i = 0; i <= N; i++) {
             graph.add(new ArrayList<>());
-            graph2.add(new ArrayList<>());
+            reverseGraph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < M; i++) {
@@ -31,17 +33,23 @@ public class Main {
             int time = Integer.parseInt(st.nextToken());
 
             graph.get(start).add(new Node(end, time));
-            graph2.get(end).add(new Node(start, time));
+            reverseGraph.get(end).add(new Node(start, time));
         }
 
-        Dijkstra(X);
+        int[] time = Dijkstra(graph, X);
+        int[] reverseTime = Dijkstra(reverseGraph, X);
+
+        int result = -1;
+        for (int i = 1; i <= N; i++) {
+            result = Math.max(result, time[i] + reverseTime[i]);
+        }
+        System.out.println(result);
 
     }
 
-    private static void Dijkstra(int start){
+    private static int[] Dijkstra(List<List<Node>> graph, int start){
         PriorityQueue<Node> pq = new PriorityQueue<>();
         int[] time = new int[N + 1];
-        int[] time2 = new int[N + 1];
 
         Arrays.fill(time, Integer.MAX_VALUE);
 
@@ -64,37 +72,7 @@ public class Main {
             }
         }
 
-        // System.out.println(Arrays.toString(time));
-
-        Arrays.fill(time2, Integer.MAX_VALUE);
-        time2[0] = 0;
-        time2[start] = 0;
-        pq.offer(new Node(start,0));
-
-        while (!pq.isEmpty()){
-            Node node = pq.poll();
-            int nodeIndex = node.index;
-            int weight = node.weight;
-
-            if(weight > time2[nodeIndex]) continue;
-
-            for (Node linkedNode : graph2.get(nodeIndex)) {
-                if(time2[linkedNode.index] > weight + linkedNode.weight){
-                    time2[linkedNode.index] = weight + linkedNode.weight;
-                    pq.offer(new Node(linkedNode.index, time2[linkedNode.index]));
-                }
-            }
-        }
-
-        // System.out.println(Arrays.toString(time2));
-
-        for (int i = 0; i < time.length; i++) {
-            time[i] += time2[i];
-        }
-
-        Arrays.sort(time);
-        System.out.println(time[time.length-1]);
-
+        return time;
     }
 
     static class Node implements Comparable<Node>{
