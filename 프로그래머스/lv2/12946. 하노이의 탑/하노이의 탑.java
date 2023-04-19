@@ -1,7 +1,4 @@
 
-import java.util.ArrayList;
-import java.util.List;
-
 class Solution {
     static int count = 0;
     static int[][] answer;
