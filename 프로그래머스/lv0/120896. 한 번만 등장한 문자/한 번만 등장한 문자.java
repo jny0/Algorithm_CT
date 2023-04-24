@@ -2,23 +2,17 @@ import java.util.*;
 
 class Solution {
     public String solution(String s) {
-        int a = -1;
-        
-        while(a!=s.length()){
-            a++;
-            for(int j= a+1; j<s.length(); j++ ){
-                if(s.charAt(a) == s.charAt(j)){
-                    s = s.replace(String.valueOf(s.charAt(a)), "");
-                    a = -1;
-                    break;
-                }
-            }
-
+        int[] alpha = new int[26];
+        for(char c : s.toCharArray()){
+            alpha[c - 'a']++;
         }
 
-        char[] c = s.toCharArray();
-        Arrays.sort(c);
-
-        return String.valueOf(c);
+        StringBuilder answer = new StringBuilder();
+        for(int i = 0; i < 26; i++){
+            if(alpha[i] == 1){
+                answer.append((char)(i + 'a'));
+            }
+        }
+        return answer.toString();
     }
 }
