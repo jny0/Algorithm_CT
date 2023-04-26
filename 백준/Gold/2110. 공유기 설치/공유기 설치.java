@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,14 +21,14 @@ public class Main {
         Arrays.sort(home); // 이분탐색을 위한 정렬
 
         int low = 1; // 최소 거리가 가질 수 있는 최솟값
-        int high = home[n - 1] - home[0]; // 최소 거리가 가질 수 있는 최댓값
+        int high = home[n - 1] - home[0] +1; // 최소 거리가 가질 수 있는 최댓값
         int ans = 0;
 
-        while (low <= high) { // Upper Bound 형식
+        while (low < high) { // Upper Bound 형식
             int mid = (low + high) / 2;
 
             if (wifi(mid) < c) { // 최소거리=mid일 때 설치 가능한 공유기의 개수가 목표값보다 작다면
-                high = mid - 1;
+                high = mid;
             }else{ // 설치 가능한 공유기 개수가 목표 개수보다 크거나 같으면 최소거리가 가질 수 있는 최대거리를 찾아냄
                 ans = mid;
                 low = mid + 1;
