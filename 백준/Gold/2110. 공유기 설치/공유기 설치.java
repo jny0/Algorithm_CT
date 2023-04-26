@@ -25,19 +25,20 @@ public class Main {
 
         while (low < high) { // Upper Bound 형식
             int mid = (low + high) / 2;
-
-            if (wifi(mid) >= c) { // 최소거리=mid일 때 설치 가능한 공유기 개수가 목표 개수보다 작거나 같으면 최소거리가 가질 수 있는 최대거리를 찾아냄
-                low = mid + 1;
-            }else{ // 최소거리=mid일 때 설치 가능한 공유기의 개수가 목표값보다 크다면 high 갱신
+            
+            if (wifi(mid) < c) { // 최소거리=mid일 때 설치 가능한 공유기의 개수가 목표값보다 작다면
                 high = mid;
+            }else{ // 설치 가능한 공유기 개수가 목표 개수보다 크거나 같으면 최소거리가 가질 수 있는 최대거리를 찾아냄
+                low = mid + 1;
             }
         }
 
-        System.out.println(high -1);
+        System.out.println(high-1); // 초과한 값을 찾았기 때문에 -1해줌
 
     }
 
-    private static int wifi(int dist) {
+
+    private static int wifi(int dist) { // 최소거리 dist일 때 설치 가능한 공유기 개수
         int count = 1; // 첫 번째 집은 무조건 설치
         int prevLocate = home[0]; // 직전 위치 초기화
 
