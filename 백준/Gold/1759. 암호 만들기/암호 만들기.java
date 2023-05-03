@@ -1,47 +1,59 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
+
+    public static int L, C;
+    public static char[] list;
+    public static char[] code;
+
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        List<String> answer = new ArrayList<>();
+        L = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
 
-        int L = Integer.parseInt(st.nextToken());
-        int C = Integer.parseInt(st.nextToken());
+        list = new char[C];
+        code = new char[L];
 
-        String[] arr = br.readLine().split(" ");
-        Arrays.sort(arr);
+        st = new StringTokenizer(br.readLine());
 
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < (1 << C); i++) {
-            for (int j = 0; j < C; j++) {
-                if ((i & (1 << j)) != 0) {
-                    sb.append(arr[j]);
-                }
-            }
-
-            if (sb.length() == L && check(sb.toString())) {
-                answer.add(sb.toString());
-            }
-            sb.delete(0, C - 1);
+        for (int x = 0; x < C; x++) {
+            list[x] = st.nextToken().charAt(0);
         }
 
-        Collections.sort(answer);
-        System.out.println(String.join("\n", answer));
+        Arrays.sort(list);
+
+        makeCode(0,0);
+
     }
 
-    public static boolean check(String str) {
+    public static void makeCode(int x,int idx) {
+        if (idx == L) {
+            if (check()) {
+                System.out.println(code);
+            }
+            return;
+        }
+
+        for (int i = x; i < C; i++) {
+            code[idx] = list[i];
+            makeCode(i+1, idx + 1);
+        }
+    }
+
+    public static boolean check() {
         int c = 0; // 자음의 개수
         int v = 0; // 모음의 개수
 
-        for (int i = 0; i < str.length(); i++) {
-            char x = str.charAt(i);
-            if (x == 'a' || x == 'e' || x == 'i' || x == 'o' || x == 'u') {
+        for (char x : code) {
+            if ("aeiou".indexOf(x) >= 0) {
                 v++;
             } else {
                 c++;
@@ -51,4 +63,5 @@ public class Main {
         if (c >= 2 && v >= 1) return true;
         return false;
     }
+
 }
