@@ -12,17 +12,20 @@ public class Main {
         int[] sumArr = new int[N+1];
 
         st = new StringTokenizer(br.readLine());
+        
 
         for (int i = 1; i <= N; i++) {
             sumArr[i] = sumArr[i - 1] + Integer.parseInt(st.nextToken());
         }
 
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
 
-            System.out.println(sumArr[end] - sumArr[start - 1]);
+            sb.append(sumArr[end] - sumArr[start-1]).append("\n");
         }
+        System.out.println(sb.toString());
     }
 }
