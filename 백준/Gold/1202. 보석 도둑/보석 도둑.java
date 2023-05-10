@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,30 +13,30 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        Jewel[] jewelArr = new Jewel[N];
-        int[] bagWeight = new int[K];
+        List<Jewel> jewelList = new ArrayList<>();
+        List<Integer> bagWeight = new ArrayList<>();
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             int weight = Integer.valueOf(st.nextToken());
             int price = Integer.valueOf(st.nextToken());
-            jewelArr[i] = new Jewel(weight, price);
+            jewelList.add(new Jewel(weight, price));
         }
 
         for (int i = 0; i < K; i++) {
-            bagWeight[i] = Integer.parseInt(br.readLine());
+            bagWeight.add(Integer.parseInt(br.readLine()));
         }
 
-        Arrays.sort(jewelArr);
-        Arrays.sort(bagWeight);
+        Collections.sort(jewelList);
+        Collections.sort(bagWeight);
 
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
 
         long sum = 0;
         int idx = 0;
-        for (int i = 0; i < bagWeight.length; i++) {
-            while (idx < N && jewelArr[idx].weight <= bagWeight[i]){
-                pq.offer(jewelArr[idx].price);
+        for (int i = 0; i < bagWeight.size(); i++) {
+            while (idx < N && jewelList.get(idx).weight <= bagWeight.get(i)){
+                pq.offer(jewelList.get(idx).price);
                 idx++;
             }
             if(!pq.isEmpty()){
@@ -61,3 +62,4 @@ public class Main {
         }
     }
 }
+
