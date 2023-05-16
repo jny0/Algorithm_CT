@@ -2,8 +2,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -11,20 +11,18 @@ public class Main {
 
         int N = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
-        Deque<Integer> dq = new ArrayDeque<>();
+        Queue<Integer> queue = new LinkedList<>();
 
         for (int i = 1; i <= N; i++) {
-            dq.offerLast(i);
+            queue.offer(i);
         }
 
         while (true) {
-           sb.append(dq.pollFirst()).append(" ");
-           if(dq.isEmpty()) break;
-           dq.offerLast(dq.pollFirst());
+           sb.append(queue.poll()).append(" ");
+           if(queue.isEmpty()) break;
+           queue.offer(queue.poll());
         }
 
         System.out.println(sb);
-
-
     }
 }
