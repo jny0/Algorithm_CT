@@ -8,13 +8,14 @@ class Solution {
         
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < b; i++){
-            for (int j = 0; j < a; j++){
-                sb.append("*");
-            }
-            sb.append("\n");
+        for (int i = 0; i < a; i++){
+            sb.append("*");
         }
         
-        System.out.println(sb);
+        for (int i = 0; i < b; i++){
+            System.out.println(sb);
+        }
+        
+        
     }
 }
