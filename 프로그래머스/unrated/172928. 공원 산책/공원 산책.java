@@ -1,3 +1,6 @@
+import java.util.*;
+
+
 class Solution {
 
     static boolean[][] map;
@@ -10,13 +13,9 @@ class Solution {
         map = new boolean[park.length][park[0].length()];
 
         for (int i = 0; i < park.length; i++) {
-            String[] parkDetail = park[i].split("");
-            for (int j = 0; j < parkDetail.length; j++) {
-                if (!parkDetail[j].equals("X")) {
-                    map[i][j] = true;
-                }
-
-                if (parkDetail[j].equals("S")) {
+            for (int j = 0; j < park[0].length(); j++) {
+                map[i][j] = park[i].charAt(j) != 'X';
+                if (park[i].charAt(j) == 'S') {
                     startX = j;
                     startY = i;
                 }
@@ -26,51 +25,32 @@ class Solution {
         for (String route : routes) {
 
             String[] routeSplit = route.split(" ");
-
-            int way = checkDirection(routeSplit[0]);
+            int direction = getDirectionIndex(routeSplit[0]);
             int distance = Integer.parseInt(routeSplit[1]);
 
-            int[] startPos = new int[]{startX, startY};
+            int prevX = startX;
+            int prevY = startY;
 
             for(int i=0; i<distance; i++){
-                int newX = startX + xPos[way];
-                int newY = startY + yPos[way];
+                int newX = startX + xPos[direction];
+                int newY = startY + yPos[direction];
 
                 if(newX < 0 || newY >= map.length || newY < 0 || newX >= map[0].length || !map[newY][newX]) {
-                    startX = startPos[0];
-                    startY = startPos[1];
+                    startX = prevX;
+                    startY = prevY;
                     break;
                 }
-
                 startX = newX;
                 startY = newY;
             }
-
-            startPos[0] = startX;
-            startPos[1] = startY;
         }
 
         return new int[]{startY, startX};
     }
 
-
-    public int checkDirection(String direction) {
-
-        switch (direction) {
-            case "E" -> {
-                return 0;
-            }
-            case "S" -> {
-                return  1;
-            }
-            case "W" -> {
-                return  2;
-            }
-            default -> {
-                return 3;
-            }
-        }
-
+    public int getDirectionIndex(String direction) {
+       Map<String, Integer> directionMap = Map.of("E", 0, "S", 1, "W", 2, "N", 3);
+       return directionMap.get(direction);
     }
 
 }
