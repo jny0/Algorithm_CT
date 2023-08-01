@@ -14,8 +14,6 @@ class Solution {
             }
         }
         
-        List<String> list = new ArrayList<>();
-        
         for(String key : map.keySet()){
             System.out.println(key + " : " + map.get(key));
         }
