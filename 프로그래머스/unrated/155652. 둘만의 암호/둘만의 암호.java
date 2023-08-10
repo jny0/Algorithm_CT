@@ -1,17 +1,11 @@
 import java.util.*;
 class Solution {
     public String solution(String s, String skip, int index) {
-        String answer = "";
         List<Character> strList = new ArrayList<>();
-        List<Character> skipChar = new ArrayList<>();
-        
-        for(int i=0; i<skip.length(); i++){
-            skipChar.add(skip.charAt(i));
-        }
-        
+ 
         for(int i=0; i<26 ; i++){
             char alphabet = (char)('a' + i);
-            if(skipChar.contains(alphabet)){
+            if(skip.contains(String.valueOf(alphabet))){
                 continue;
             }
             strList.add(alphabet);
