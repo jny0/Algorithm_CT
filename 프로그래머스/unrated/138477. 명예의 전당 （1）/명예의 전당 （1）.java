@@ -7,14 +7,9 @@ class Solution {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
 
         for(int i=0; i<score.length; i++){
-            int s = score[i];
-            if(pq.size() < k){
-                pq.offer(s);
-            }else{
-                if(pq.peek() < s){
-                    pq.poll();
-                    pq.offer(s);
-                }
+            pq.offer(score[i]);
+            if(pq.size() > k){
+                pq.poll();
             }
             answer[i] = pq.peek();
         }
