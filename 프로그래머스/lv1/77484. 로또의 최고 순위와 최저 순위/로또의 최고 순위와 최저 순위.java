@@ -1,5 +1,7 @@
 class Solution {
     public int[] solution(int[] lottos, int[] win_nums) {
+        int[] rank = {6, 6, 5, 4, 3, 2, 1};
+        
         int win_count = 0;
         int zero_count = 0;
         
@@ -16,23 +18,7 @@ class Solution {
             }
         }
         
-        return new int[]{score(win_count + zero_count), score(win_count)};
+        return new int[]{rank[win_count + zero_count], rank[win_count]};
     }
-    
-    public int score(int count){
-        switch(count){
-            case 6: 
-                return 1;
-            case 5: 
-                return 2;
-            case 4: 
-                return 3;
-            case 3: 
-                return 4;
-            case 2: 
-                return 5;
-            default: 
-                return 6;
-        }
-    }
+
 }
