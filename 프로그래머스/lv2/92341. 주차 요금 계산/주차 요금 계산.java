@@ -2,7 +2,7 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] fees, String[] records) {        
         Map<String, String> timeMap = new HashMap<>();
-        Map<String, Integer> fee = new HashMap<>();
+        Map<String, Integer> fee = new TreeMap<>();
         
         int parkingTime = 0;
         for(int i=0; i<records.length; i++){
@@ -26,17 +26,15 @@ class Solution {
         }
         
         int[] answer = new int[fee.size()];
-        List<String> sortedCarNumber = new ArrayList<>(fee.keySet());
-        Collections.sort(sortedCarNumber);
+        int index = 0;
         
-        for(int i=0; i<answer.length; i++){
-            parkingTime = fee.get(sortedCarNumber.get(i));
+        for(int time : fee.values()){
             int basicTime = fees[0];
             double unitTime = (double)fees[2];
-            if(parkingTime <= basicTime){
-                answer[i] = fees[1];
+            if(time <= basicTime){
+                answer[index++] = fees[1];
             }else{
-                answer[i] = fees[1] + (int)Math.ceil(((parkingTime - fees[0]) / unitTime)) * fees[3];
+                answer[index++] = fees[1] + (int)Math.ceil(((time - fees[0]) / unitTime)) * fees[3];
             }
         }
         
