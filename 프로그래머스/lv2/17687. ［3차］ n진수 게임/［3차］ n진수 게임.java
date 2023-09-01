@@ -6,7 +6,7 @@ class Solution {
         
         int num = 0;
         while(sb.length() < t*m){
-            String numStr = Integer.toString(num, n).toUpperCase();
+            String numStr = Integer.toString(num, n);
             sb.append(numStr);
             num++;
         }
@@ -19,6 +19,6 @@ class Solution {
         
         System.out.println(sb.toString());
         
-        return result.toString();
+        return result.toString().toUpperCase();
     }
 }
