@@ -13,7 +13,7 @@ class Solution {
         PriorityQueue<Stage> pq = new PriorityQueue<>();
         
         for(int i=0; i<N; i++){
-            double failRate = (double)pre[i]/count;
+            double failRate = (double)pre[i] / count;
             if(count == 0) failRate = 0;
             pq.offer(new Stage(i+1, failRate));
             count -= pre[i];
