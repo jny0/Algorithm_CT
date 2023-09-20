@@ -1,37 +1,60 @@
 import java.util.*;
+
 class Solution {
-    static int maxSheepCount = 0;
-    static int[] gInfo;
-    static int[][] gEdges;
+    static boolean[] visited;
+    static List<Integer>[] tree;
+    static int count = 1;
+    static int maxCount = 1;
     public int solution(int[] info, int[][] edges) {
 
-        gInfo = info;
-        gEdges = edges;
-        boolean[] initVisited = new boolean[info.length];
-        dfs(initVisited, 0, 0, 0);
+        int N = info.length;
 
-        return maxSheepCount;
+        tree = new ArrayList[info.length];
+
+        for(int i=0; i<N; i++){
+            tree[i] = new ArrayList<Integer>();
+        }
+
+        for(int i=0; i<edges.length; i++){
+            tree[edges[i][0]].add(edges[i][1]);
+            tree[edges[i][1]].add(edges[i][0]);
+        }
+
+        for(int i=0; i<N; i++){
+            Collections.sort(tree[i]);
+        }
+
+        System.out.println(Arrays.toString(tree));
+
+        visited = new boolean[N];
+
+        BFS(info, 0);
+
+        return maxCount;
     }
 
-    static void dfs(boolean[] visited, int index, int sheepCount, int wolfCount){
-        visited[index] = true;
-        
-        if(gInfo[index] == 0){
-            sheepCount++;
-            maxSheepCount = Math.max(sheepCount, maxSheepCount);
-        }else{
-            wolfCount++;
-        }
-        
-        if(sheepCount <= wolfCount) return;
-        
-        for(int[] edge : gEdges){
-            if(visited[edge[0]] && !visited[edge[1]]){
-                boolean[] nextVisited = new boolean[visited.length];
-            	for (int i = 0; i < visited.length; i++) {
-                	nextVisited[i] = visited[i];
-            	}
-                dfs(nextVisited, edge[1], sheepCount, wolfCount);
+    static void BFS(int[] info, int node){
+        Queue<Integer> queue = new LinkedList<Integer>();
+        queue.add(node);
+        visited[node] = true;
+
+        while(!queue.isEmpty()){
+            int now_Node = queue.poll();
+            for(int i : tree[now_Node]){
+                if(!visited[i]){
+                    if(info[i] == 0) {
+                        count++;
+                        maxCount++;
+                    }
+                    else if (info[i] == 1) count--;
+                    visited[i] = true;
+                    queue.add(i);
+                }
+
+            }
+
+            if(queue.isEmpty() && count <= 0){
+                break;
             }
         }
     }
