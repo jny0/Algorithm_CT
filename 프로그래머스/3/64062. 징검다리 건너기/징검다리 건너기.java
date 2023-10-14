@@ -2,8 +2,6 @@ import java.util.*;
 class Solution {
     public int solution(int[] stones, int k) {
         Deque<Integer> dq = new ArrayDeque<Integer>();
-        
-        int[] res = new int[stones.length - k + 1];
         int answer = Integer.MAX_VALUE;
         
         for(int i=0; i<stones.length; i++){
